@@ -47,7 +47,7 @@ inquirer.prompt([
 
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
       if (!error) {
-        console.log(tweets);
+        //console.log(tweets);
         for (j = 0; j < tweets.length; j++) {
           console.log(`Tweet : ${tweets[j].text}`);
           console.log(`Created : ${tweets[j].created_at}`);
@@ -68,20 +68,32 @@ inquirer.prompt([
         message : "Please enter the name of a song."
       }
     ]).then(function(data){
-    
-   
-      
-      var term = data.searchterm;
+          var term = data.searchterm;
 
-        
+          if (term === ""){
+            term = "The Sign"
+            spotify.search({ type: 'track', query: term, limit : 10 }, function(err, data) {
+            if (err) {
+              return console.log('Error occurred: ' + err);
+            }
+            console.log(`Artist : ${data.tracks.items[7].artists[0].name}`);
+            console.log(`Song : ${data.tracks.items[7].name}`);
+            console.log(`Album : ${data.tracks.items[7].album.name}`);
+            console.log(`Link to Song : ${data.tracks.items[7].external_urls.spotify}`); 
+          });//spotify default search end 
+        }
+        else{
           spotify.search({ type: 'track', query: term, limit : 10 }, function(err, data) {
             if (err) {
               return console.log('Error occurred: ' + err);
             }
-            console.log(`${term}`);
-            console.log(data.tracks.items[0].artists[0].name); 
-          });//spotify search end 
-        
+            //console.log(`Song : ${data}`);
+            console.log(`Artist : ${data.tracks.items[0].artists[0].name}`);
+            console.log(`Song : ${data.tracks.items[0].name}`);
+            console.log(`Album : ${data.tracks.items[0].album.name}`);
+            console.log(`Link to Song : ${data.tracks.items[0].external_urls.spotify}`);
+          });//spotify search end
+          }
     })//inquirer.prompt then end
     
 
@@ -96,21 +108,40 @@ inquirer.prompt([
           message : "Enter a movie Name"
           }
       ]).then(function(data){
-          
+
+          if (data.moviename === ""){
+            var params = {
+              apiKey: "trilogy",
+              title: "Mr. Nobody",
+            }
+          omdbApi.get(params, function(err, data) {
+        
+            console.log(`Title : ${data.Title}`);
+            console.log(`Release : ${data.Year}`);
+            console.log(`RT rating : ${data.Ratings[1].Value}`);
+            console.log(`Origin : ${data.Country}`);
+            console.log(`Language : ${data.Language}`);
+            console.log(`Plot: ${data.Plot}`);
+            console.log(`Actors : ${data.Actors}`);
+          });
+        }
+        else{
           var params = {
             apiKey: "trilogy",
             title: data.moviename,
           }
-          omdbApi.get(params, function(err, data) {
-            console.log(data.Title);
-            console.log(data.Year);
-            console.log(data.Ratings[0]);
-            console.log(data.Country);
-            console.log(data.Language);
-            console.log(data.Plot);
-            console.log(data.Actors);
-          });
-  
+        omdbApi.get(params, function(err, data) {
+          console.log(`Title : ${data.Title}`);
+          console.log(`Release : ${data.Year}`);
+          console.log(`RT rating : ${data.Ratings[1].Value}`);
+          console.log(`Origin : ${data.Country}`);
+          console.log(`Language : ${data.Language}`);
+          console.log(`Plot: ${data
+            .Plot}`);
+          console.log(`Actors : ${data.Actors}`);
+        });
+        }
+
         })//end movie inquirer then
 
     break;
@@ -126,8 +157,11 @@ inquirer.prompt([
           if (err) {
             return console.log('Error occurred: ' + err);
           }
-          console.log(textsplit[1]);
-         console.log(data.tracks.items[0].artists[0].name); 
+          
+          console.log(`Artist : ${data.tracks.items[0].artists[0].name}`);
+          console.log(`Song : ${data.tracks.items[0].name}`);
+          console.log(`Album : ${data.tracks.items[0].album.name}`);
+          console.log(`Link to Song : ${data.tracks.items[0].external_urls.spotify}`); 
         });//spotify search end 
       })
     
