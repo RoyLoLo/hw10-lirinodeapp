@@ -1,0 +1,30 @@
+{
+  "name": "hw10-lirinodeapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node liri.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RoyLoLo/hw10-lirinodeapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RoyLoLo/hw10-lirinodeapp/issues"
+  },
+  "homepage": "https://github.com/RoyLoLo/hw10-lirinodeapp#readme",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "inquirer": "^6.0.0",
+    "node-spotify-api": "^1.0.7",
+    "omdb-client": "^2.0.0",
+    "request": "^2.87.0",
+    "require": "^2.4.20",
+    "twitter": "^1.7.1"
+  }
+}
